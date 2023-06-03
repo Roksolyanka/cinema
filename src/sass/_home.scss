@@ -1,28 +1,88 @@
-.example {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.5;
-  background-color: #fff;
-  color: #2f2f37;
-  max-width: 960px;
-  padding: 16px;
+.weekly-trends-container {
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 80px;
+  padding-bottom: 60px;
 }
 
-.example code {
-  font-family: monospace;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: #ff6b0a;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 2px;
+.weekly-trends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
-.example .background {
-  height: 240px;
-  // ❗️❗️❗️ The path to images from a SASS file
-  // is always the same as from the css folder.
-  // background-image: url('../images/logo.png');
-  background-size: cover;
-  background-position: center;
+.weekly-trends-title {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.18;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.weekly-trends-see-all-link {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.18;
+  color: #f87719;
+}
+
+.weekly-trends-see-all-link:hover {
+  text-decoration: underline;
+}
+
+.weekly-trends-movies-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 28px;
+}
+
+.weekly-trends-movie-card {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 63.48%,
+    rgba(0, 0, 0, 0.9) 92.16%
+  );
+  border-radius: 5px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+// .movie-card img {
+//   width: 100%;
+//   border-radius: 5px;
+// }
+
+.weekly-trends-movie-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.weekly-trends-movie-title {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.weekly-trends-movie-genres {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+  color: #b7b7b7;
 }
