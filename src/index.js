@@ -5,8 +5,8 @@ window.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchMovies() {
-  var apiKey = '839ee1ac45e2249141bd738796b376ad'; // Вставте свій API ключ
-  var trendingUrl =
+  const apiKey = '839ee1ac45e2249141bd738796b376ad'; // Вставте свій API ключ
+  const trendingUrl =
     'https://api.themoviedb.org/3/trending/movie/week?api_key=' + apiKey;
 
   fetch(trendingUrl)
@@ -14,14 +14,14 @@ function fetchMovies() {
       return response.json();
     })
     .then(function (data) {
-      var movies = data.results.slice(0, 3); // Обмежуємо список фільмів до трьох
-      var moviesContainer = document.getElementById(
+      const movies = data.results.slice(0, 3); // Обмежуємо список фільмів до трьох
+      const moviesContainer = document.getElementById(
         'weekly-trends-movies-container'
       );
 
       movies.forEach(function (movie) {
-        var movieId = movie.id;
-        var movieUrl =
+        const movieId = movie.id;
+        const movieUrl =
           'https://api.themoviedb.org/3/movie/' +
           movieId +
           '?api_key=' +
@@ -32,7 +32,7 @@ function fetchMovies() {
             return response.json();
           })
           .then(function (movieData) {
-            var movieCard = createMovieCard(movie, movieData);
+            const movieCard = createMovieCard(movie, movieData);
             moviesContainer.appendChild(movieCard);
           })
           .catch(function (error) {
@@ -46,35 +46,35 @@ function fetchMovies() {
 }
 
 function createMovieCard(movie, movieData) {
-  var movieCard = document.createElement('div');
+  const movieCard = document.createElement('div');
   movieCard.className = 'weekly-trends-movie-card';
 
   if (movie.poster_path) {
-    var posterUrl = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
-    var poster = document.createElement('img');
+    const posterUrl = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
+    const poster = document.createElement('img');
     poster.src = posterUrl;
     poster.alt = movie.title + ' Poster';
     movieCard.appendChild(poster);
 
-    var movieInfo = document.createElement('div');
+    const movieInfo = document.createElement('div');
     movieInfo.className = 'weekly-trends-movie-info';
 
-    var titleGenresWrapper = document.createElement('div'); // Окремий div для заголовку та жанрів
+    const titleGenresWrapper = document.createElement('div'); // Окремий div для заголовку та жанрів
     titleGenresWrapper.className = 'title-genres-wrapper';
 
-    var title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.classList.add('weekly-trends-movie-title');
     title.textContent = movie.title;
     titleGenresWrapper.appendChild(title);
 
-    var genres = document.createElement('p');
+    const genres = document.createElement('p');
     genres.classList.add('weekly-trends-movie-genres');
     genres.textContent = getGenres(movieData.genres, movieData.release_date);
     titleGenresWrapper.appendChild(genres);
 
     movieInfo.appendChild(titleGenresWrapper);
 
-    var rating = document.createElement('p');
+    const rating = document.createElement('p');
     rating.textContent = movieData.vote_average;
     movieInfo.appendChild(rating);
 
@@ -89,7 +89,7 @@ function createMovieCard(movie, movieData) {
 }
 
 function getGenres(genresArray, releaseDate) {
-  var year = releaseDate ? releaseDate.slice(0, 4) : ''; // Отримуємо рік з дати
+  const year = releaseDate ? releaseDate.slice(0, 4) : ''; // Отримуємо рік з дати
 
   if (genresArray.length > 2) {
     return genresArray[0].name + ', others | ' + year;
