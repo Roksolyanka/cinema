@@ -1,7 +1,4 @@
 import './JS/api_key';
-// import 'jquery';
-// import 'rateyo';
-// import '@rateyo/jquery';
 
 window.addEventListener('DOMContentLoaded', function () {
   fetchMovies();
