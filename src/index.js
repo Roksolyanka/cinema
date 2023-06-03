@@ -1,4 +1,7 @@
 import './JS/api_key';
+// import 'jquery';
+// import 'rateyo';
+// import '@rateyo/jquery';
 
 window.addEventListener('DOMContentLoaded', function () {
   fetchMovies();
@@ -74,9 +77,25 @@ function createMovieCard(movie, movieData) {
 
     movieInfo.appendChild(titleGenresWrapper);
 
-    const rating = document.createElement('p');
-    rating.textContent = movieData.vote_average;
-    movieInfo.appendChild(rating);
+    const ratingContainer = document.createElement('div');
+    ratingContainer.className = 'rating-container';
+    movieInfo.appendChild(ratingContainer);
+
+    const ratingElement = document.createElement('div');
+    ratingElement.className = 'movie-rating';
+    ratingContainer.appendChild(ratingElement);
+
+    // const rating = document.createElement('p');
+    // rating.textContent = movieData.vote_average;
+    // movieInfo.appendChild(rating);
+
+    // Ініціалізувати зірковий рейтинг RateYo
+    $(ratingElement).rateYo({
+      rating: movieData.vote_average / 2, // Поділити рейтинг на 2, оскільки RateYo використовує шкалу від 0 до 5
+      readOnly: true, // не можна змінювати рейтинг
+      starWidth: '18px', // Розмір зірок
+      precision: 2, // Заокруглення до двох десятих
+    });
 
     movieCard.appendChild(movieInfo);
 
@@ -118,5 +137,3 @@ function openModal(movie, movieData) {
   );
   console.log('Movie Rating:', movieData.vote_average);
 }
-
-document.querySelector('.movies-container');

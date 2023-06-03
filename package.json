@@ -18,7 +18,10 @@
     "url": "https://github.com/goitacademy/parcel-project-template/issues"
   },
   "dependencies": {
-    "modern-normalize": "^1.1.0"
+    "@rateyo/jquery": "^3.0.0-alpha.2",
+    "jquery": "^3.7.0",
+    "modern-normalize": "^1.1.0",
+    "rateyo": "^3.0.0-alpha.2"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
