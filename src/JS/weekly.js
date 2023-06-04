@@ -12,7 +12,7 @@ function fetchMovies() {
       return response.json();
     })
     .then(function (data) {
-      const movies = data.results.slice(0, 3); // Обмежуємо список фільмів до трьох
+      const movies = data.results; 
       const moviesContainer = document.getElementById(
         'weekly-trends-movies-container'
       );
