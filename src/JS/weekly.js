@@ -1,37 +1,35 @@
 window.addEventListener('DOMContentLoaded', function () {
-  fetchMovies();
+  fetchFilmsWeeklyTrends();
 });
 
-function fetchMovies() {
-  const apiKey = '839ee1ac45e2249141bd738796b376ad'; // Вставте свій API ключ
-  const trendingUrl =
-    'https://api.themoviedb.org/3/trending/movie/week?api_key=' + apiKey;
+function fetchFilmsWeeklyTrends() {
+  const apiKeyWeeklyTrends = '839ee1ac45e2249141bd738796b376ad'; // Вставте свій API ключ
+  const trendingUrlWeeklyTrends = `https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKeyWeeklyTrends}`;
 
-  fetch(trendingUrl)
+  fetch(trendingUrlWeeklyTrends)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      const movies = data.results; 
-      const moviesContainer = document.getElementById(
+      const filmsWeeklyTrends = data.results;
+      const filmsContainerWeeklyTrends = document.getElementById(
         'weekly-trends-movies-container'
       );
 
-      movies.forEach(function (movie) {
-        const movieId = movie.id;
-        const movieUrl =
-          'https://api.themoviedb.org/3/movie/' +
-          movieId +
-          '?api_key=' +
-          apiKey;
+      filmsWeeklyTrends.forEach(function (filmWeeklyTrends) {
+        const filmIdWeeklyTrends = filmWeeklyTrends.id;
+        const filmUrlWeeklyTrends = `https://api.themoviedb.org/3/movie/${filmIdWeeklyTrends}?api_key=${apiKeyWeeklyTrends}`;
 
-        fetch(movieUrl)
+        fetch(filmUrlWeeklyTrends)
           .then(function (response) {
             return response.json();
           })
-          .then(function (movieData) {
-            const movieCard = createMovieCard(movie, movieData);
-            moviesContainer.appendChild(movieCard);
+          .then(function (filmDataWeeklyTrends) {
+            const filmCardWeeklyTrends = createFilmCardWeeklyTrends(
+              filmWeeklyTrends,
+              filmDataWeeklyTrends
+            );
+            filmsContainerWeeklyTrends.appendChild(filmCardWeeklyTrends);
           })
           .catch(function (error) {
             console.log(error);
@@ -43,92 +41,146 @@ function fetchMovies() {
     });
 }
 
-function createMovieCard(movie, movieData) {
-  const movieCard = document.createElement('div');
-  movieCard.className = 'weekly-trends-movie-card';
+function createFilmCardWeeklyTrends(movie, data) {
+  const movieCardWeeklyTrends = document.createElement('div');
+  movieCardWeeklyTrends.className = 'weekly-trends-movie-card';
 
   if (movie.poster_path) {
-    const posterUrl = 'https://image.tmdb.org/t/p/w500' + movie.poster_path;
-    const poster = document.createElement('img');
-    poster.src = posterUrl;
-    poster.alt = movie.title + ' Poster';
-    movieCard.appendChild(poster);
+    const posterUrlWeeklyTrends = movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : '/src/images/coming_soon_default.jpg'; // Встановіть шлях до вашої дефолтної картинки
 
-    const movieInfo = document.createElement('div');
-    movieInfo.className = 'weekly-trends-movie-info';
+    // const posterUrlWeeklyTrends = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    const posterWeeklyTrends = document.createElement('img');
+    posterWeeklyTrends.src = posterUrlWeeklyTrends;
+    posterWeeklyTrends.alt = `${movie.title} Poster`;
+    movieCardWeeklyTrends.appendChild(posterWeeklyTrends);
 
-    const titleGenresWrapper = document.createElement('div'); // Окремий div для заголовку та жанрів
-    titleGenresWrapper.className = 'title-genres-wrapper';
+    const movieInfoWeeklyTrends = document.createElement('div');
+    movieInfoWeeklyTrends.className = 'weekly-trends-movie-info';
 
-    const title = document.createElement('h2');
-    title.classList.add('weekly-trends-movie-title');
-    title.textContent = movie.title;
-    titleGenresWrapper.appendChild(title);
+    const titleGenresWrapperWeeklyTrends = document.createElement('div'); // Окремий div для заголовку та жанрів
+    titleGenresWrapperWeeklyTrends.className = 'title-genres-wrapper';
 
-    const genres = document.createElement('p');
-    genres.classList.add('weekly-trends-movie-genres');
-    genres.textContent = getGenres(movieData.genres, movieData.release_date);
-    titleGenresWrapper.appendChild(genres);
+    const titleCodeWeeklyTrends = document.createElement('h2');
+    titleCodeWeeklyTrends.classList.add('weekly-trends-movie-title');
+    titleCodeWeeklyTrends.textContent = movie.title;
+    titleGenresWrapperWeeklyTrends.appendChild(titleCodeWeeklyTrends);
 
-    movieInfo.appendChild(titleGenresWrapper);
+    const genresCodeWeeklyTrends = document.createElement('p');
+    genresCodeWeeklyTrends.classList.add('weekly-trends-movie-genres');
+    genresCodeWeeklyTrends.textContent = getGenres(
+      data.genres,
+      data.release_date
+    );
+    titleGenresWrapperWeeklyTrends.appendChild(genresCodeWeeklyTrends);
 
-    const ratingContainer = document.createElement('div');
-    ratingContainer.className = 'rating-container';
-    movieInfo.appendChild(ratingContainer);
+    movieInfoWeeklyTrends.appendChild(titleGenresWrapperWeeklyTrends);
 
-    const ratingElement = document.createElement('div');
-    ratingElement.className = 'movie-rating';
-    ratingContainer.appendChild(ratingElement);
+    const ratingCodeWeeklyTrends = document.createElement('div');
+    ratingCodeWeeklyTrends.className = 'weekly-trends-rating';
+    const ratingBodyCodeWeeklyTrends = document.createElement('div');
+    ratingBodyCodeWeeklyTrends.className = 'weekly-trends-rating-body';
+    const ratingActiveCodeWeeklyTrends = document.createElement('div');
+    ratingActiveCodeWeeklyTrends.className = 'weekly-trends-rating-active';
+    const ratingItemsCodeWeeklyTrends = document.createElement('div');
+    ratingItemsCodeWeeklyTrends.className = 'weekly-trends-rating-items';
 
-    // const rating = document.createElement('p');
-    // rating.textContent = movieData.vote_average;
-    // movieInfo.appendChild(rating);
+    for (let i = 1; i <= 5; i++) {
+      const ratingItemCodeWeeklyTrends = document.createElement('input');
+      ratingItemCodeWeeklyTrends.type = 'radio';
+      ratingItemCodeWeeklyTrends.className = 'weekly-trends-rating-item';
+      ratingItemCodeWeeklyTrends.value = i;
+      ratingItemCodeWeeklyTrends.name = `rating-${movie.title}`;
+      ratingItemsCodeWeeklyTrends.appendChild(ratingItemCodeWeeklyTrends);
+    }
+
+    ratingActiveCodeWeeklyTrends.appendChild(ratingItemsCodeWeeklyTrends);
+    ratingBodyCodeWeeklyTrends.appendChild(ratingActiveCodeWeeklyTrends);
+    ratingCodeWeeklyTrends.appendChild(ratingBodyCodeWeeklyTrends);
+
+    movieInfoWeeklyTrends.appendChild(ratingCodeWeeklyTrends);
+
+    const ratingsArrayWeeklyTrends = document.querySelectorAll(
+      '.weekly-trends-rating'
+    );
+    if (ratingsArrayWeeklyTrends.length > 0) {
+      showStarsRatingWeeklyTrends();
+    }
+
+    function showStarsRatingWeeklyTrends() {
+      let ratingActiveWeeklyTrends, ratingValueWeeklyTrends;
+      for (let index = 0; index < ratingsArrayWeeklyTrends.length; index++) {
+        const starRating = ratingsArrayWeeklyTrends[index];
+        showStarRatingWeeklyTrends(starRating);
+      }
+
+      function showStarRatingWeeklyTrends(rating) {
+        initRatingVarsWeeklyTrends(rating);
+
+        setRatingActiveWidthWeekly();
+      }
+
+      function initRatingVarsWeeklyTrends(rating) {
+        ratingActiveWeeklyTrends = rating.querySelector(
+          '.weekly-trends-rating-active'
+        );
+        ratingValueWeeklyTrends = data.vote_average;
+      }
+
+      function setRatingActiveWidthWeekly(index = ratingValueWeeklyTrends) {
+        const ratingActiveWidthWeeklyTrends = (index / 10) * 100;
+        ratingActiveWeeklyTrends.style.width = `${ratingActiveWidthWeeklyTrends}%`;
+      }
+    }
 
     // Ініціалізувати зірковий рейтинг RateYo
-    $(ratingElement).rateYo({
-      rating: movieData.vote_average / 2, // Поділити рейтинг на 2, оскільки RateYo використовує шкалу від 0 до 5
-      readOnly: true, // не можна змінювати рейтинг
-      starWidth: '18px', // Розмір зірок
-      precision: 2, // Заокруглення до двох десятих
-    });
+    // $(ratingElement).rateYo({
+    //   rating: movieData.vote_average / 2, // Поділити рейтинг на 2, оскільки RateYo використовує шкалу від 0 до 5
+    //   readOnly: true, // не можна змінювати рейтинг
+    //   starWidth: '10px', // Розмір зірок
+    //   precision: 2, // Заокруглення до двох десятих
+    // });
+    movieCardWeeklyTrends.appendChild(movieInfoWeeklyTrends);
 
-    movieCard.appendChild(movieInfo);
-
-    movieCard.addEventListener('click', function () {
-      openModal(movie, movieData);
+    movieCardWeeklyTrends.addEventListener('click', function () {
+      openModal(movie, data);
     });
   }
 
-  return movieCard;
+  return movieCardWeeklyTrends;
 }
 
-function getGenres(genresArray, releaseDate) {
-  const year = releaseDate ? releaseDate.slice(0, 4) : ''; // Отримуємо рік з дати
+function getGenres(genresArrayFilmWeeklyTrends, releaseDateFilmWeeklyTrends) {
+  const yearFilmWeeklyTrends = releaseDateFilmWeeklyTrends
+    ? releaseDateFilmWeeklyTrends.slice(0, 4)
+    : 'Not yet'; // Отримуємо рік з дати
 
-  if (genresArray.length > 2) {
-    return genresArray[0].name + ', others | ' + year;
+  if (genresArrayFilmWeeklyTrends.length === 0) {
+    return 'Not yet | ' + yearFilmWeeklyTrends;
+  } else if (genresArrayFilmWeeklyTrends.length > 2) {
+    return (
+      genresArrayFilmWeeklyTrends[0].name + ', others | ' + yearFilmWeeklyTrends
+    );
   } else {
     return (
-      genresArray
-        .map(function (genre) {
-          return genre.name;
+      genresArrayFilmWeeklyTrends
+        .map(function (genreFilmWeeklyTrends) {
+          return genreFilmWeeklyTrends.name;
         })
         .join(', ') +
       ' | ' +
-      year
+      yearFilmWeeklyTrends
     );
   }
 }
 
-function openModal(movie, movieData) {
+function openModal(movie, data) {
   // Виконати дії для відкриття модального вікна з детальною інформацією про фільм
   // Ви можете викликати власну функцію або використовувати бібліотеки/інструменти для створення модального вікна.
   // У цьому коді я просто виведу інформацію про фільм у консоль для прикладу:
   console.log('Open Modal');
   console.log('Movie Title:', movie.title);
-  console.log(
-    'Movie Genres:',
-    getGenres(movieData.genres, movieData.release_date)
-  );
-  console.log('Movie Rating:', movieData.vote_average);
+  console.log('Movie Genres:', getGenres(data.genres, data.release_date));
+  console.log('Movie Rating:', data.vote_average);
 }

@@ -24,20 +24,23 @@
 .weekly-trends-movie-card {
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 63.48%,
-    rgba(0, 0, 0, 0.9) 92.16%
-  );
+  box-shadow: 1px 1px 24px 2px rgba(1, 1, 1, 0.45);
   border-radius: 5px;
   position: relative;
   display: inline-block;
   cursor: pointer;
 }
 
-.movie-card img {
+.weekly-trends-movie-card::before {
+  content: '';
+  position: absolute;
   width: 100%;
-  border-radius: 5px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 63.48%,
+    rgba(0, 0, 0, 0.9) 92.16%
+  );
 }
 
 .weekly-trends-movie-info {
@@ -62,7 +65,60 @@
   color: #b7b7b7;
 }
 
+.weekly-trends-rating {
+  display: flex;
+  align-items: flex-end;
+  font-size: 40px;
+  line-height: 0.75;
+}
+
+.weekly-trends-rating-body {
+  position: relative;
+}
+
+.weekly-trends-rating-body::before {
+  content: '★★★★★';
+  letter-spacing: 4px;
+  display: block;
+}
+
+.weekly-trends-rating-active {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.weekly-trends-rating-active::before {
+  content: '★★★★★';
+  position: absolute;
+  letter-spacing: 4px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: orange;
+}
+
+.weekly-trends-rating-items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.weekly-trends-rating-item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
+}
+
 @media screen and (min-width: 320px) {
+  /* ------------------------WEEKLY TRENDS-------------------------- */
   .weekly-trends-container {
     padding-left: 20px;
     padding-right: 20px;
@@ -103,9 +159,19 @@
     font-size: 12px;
     line-height: 1.67;
   }
+
+  .weekly-trends-rating-body::before {
+    font-size: 14px;
+  }
+
+  .weekly-trends-rating-active::before {
+    font-size: 14px;
+  }
 }
+/* ------------------------------------------------------------- */
 
 @media screen and (min-width: 768px) {
+  /* ------------------------WEEKLY TRENDS-------------------------- */
   .weekly-trends-container {
     padding-left: 32px;
     padding-right: 32px;
@@ -149,9 +215,19 @@
     font-size: 12px;
     line-height: 1.5;
   }
+
+  .weekly-trends-rating-body::before {
+    font-size: 10px;
+  }
+
+  .weekly-trends-rating-active::before {
+    font-size: 10px;
+  }
 }
+/* ------------------------------------------------------------------ */
 
 @media screen and (min-width: 1246px) {
+  /* ------------------------WEEKLY TRENDS-------------------------- */
   .weekly-trends-container {
     padding-left: 32px;
     padding-right: 32px;
@@ -189,4 +265,13 @@
     font-size: 20px;
     line-height: 1.15;
   }
+
+  .weekly-trends-rating-body::before {
+    font-size: 18px;
+  }
+
+  .weekly-trends-rating-active::before {
+    font-size: 18px;
+  }
+  /* ------------------------------------------------------------------- */
 }
